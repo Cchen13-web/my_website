@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Charity: Water - One Drop (Phone)</title>
+  <style>
+    /* Phone border for preview */
+    .phone-frame {
+      width: 375px;              /* Typical phone width */
+      height: 700px;             /* Typical phone height */
+      border: 10px solid #001e4a;   /* Dark border for phone edge */
+      border-radius: 36px;       /* Rounded corners for phone */
+      box-shadow: 0 0 24px rgba(0,0,0,0.4);
+      margin: 40px auto;
+      background: #111;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .phone-notch {
+      width: 100px;
+      height: 16px;
+      background: #222;
+      border-radius: 0 0 12px 12px;
+      position: absolute;
+      top: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 2;
+    }
+    .phone-content {
+      width: 100%;
+      height: 100%;
+      overflow-y: auto;
+      background: #000;
+      position: relative;
+    }
+
+    body {
+      background: #222;
+    }
+
+    /* Navbar for phone: logo centered, acts as menu button */
+    .navbar {
+      width: 100%;
+      background: #fff;
+      padding: 0.7rem 1rem;
+      display: flex;
+      justify-content: center; /* Center the logo */
+      align-items: center;
+      position: sticky;
+      top: 0;
+      left: 0;
+      z-index: 10;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+    .logo {
+      width: 130px; /* Bigger logo for phone */
+      background: #fff;
+      padding: 0.3rem;
+      border-radius: 10px;
+      border: 3px solid #FFC907;
+      cursor: pointer;
+      display: block;
+    }
+
+    /* Dropdown menu covers the whole phone screen */
+    .dropdown-menu {
+      display: none; /* Hidden by default */
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 375px;
+      height: 700px;
+      background: #001e4a;
+      z-index: 100;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      /* Add background image for hero effect */
+      background-image: url('img/charity_water.jpg');
+      background-size: cover;
+      background-position: center;
+    }
+    .dropdown-menu.open {
+      display: flex;
+    }
+    .dropdown-overlay {
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(255,255,255,0.92); /* White overlay for readability */
+      z-index: 101;
+    }
+    .dropdown-links {
+      position: relative;
+      z-index: 102;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .dropdown-link, .dropdown-give {
+      color: #001e4a;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 1.5rem;
+      padding: 1.2rem 0;
+      border-radius: 8px;
+      width: 80%;
+      text-align: center;
+      margin-bottom: 1.2rem;
+      background: #f7f7f7;
+      transition: background 0.2s, color 0.2s;
+      display: block;
+    }
+    .dropdown-give {
+      background-color: #FFC907;
+      color: #001e4a;
+      margin-bottom: 1.5rem;
+    }
+    .dropdown-link:hover, .dropdown-give:hover {
+      background: #ffe066;
+      color: #002f6c;
+    }
+    .close-menu {
+      position: absolute;
+      top: 18px;
+      right: 24px;
+      font-size: 2.5rem;
+      color: #001e4a;
+      background: none;
+      border: none;
+      cursor: pointer;
+      z-index: 103;
+    }
+
+    /* Hero section for phone: zoomed in, text centered, bigger text */
+    .hero {
+      background-image: url('img/charity_water.jpg');
+      background-size: 305%;         /* Zoom in more for phone */
+      background-position: center top;
+      height: 700px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 0.9rem 0.5rem 0 0.5rem;
+      text-align:center;
+      position: top center;
+    }
+    .headline {
+      font-size: 2.6rem;   /* Bigger for phone */
+      font-weight: bold;
+      line-height: 1.1;
+      color: #fff;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.6);
+      margin-bottom: 1.2rem;
+    }
+    .subheading {
+      font-size: 1.2rem;   /* Bigger for phone */
+      color: #f3f3f3;
+      text-shadow: 0 1px 3px rgba(0,0,0,0.4);
+      margin-bottom: 1.5rem;
+      line-height: 1.4;
+    }
+    .cta-button {
+      background-color: #002f6c;
+      color: #FFC907;
+      border: none;
+      padding: 1.1rem 2.2rem;
+      font-size: 1.2rem;   /* Bigger for phone */
+      font-weight: 700;
+      border-radius: 10px;
+      cursor: pointer;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+      transition: background 0.3s;
+    }
+    .cta-button:hover {
+      background-color: #001f4a;
+    }
+  </style>
+</head>
+<body>
+  <!-- Phone frame for preview -->
+  <div class="phone-frame">
+    <div class="phone-notch"></div>
+    <div class="phone-content">
+      <!-- Navbar with logo as menu button -->
+      <div class="navbar">
+        <!-- Logo acts as menu button -->
+        <img src="img/cw_logo-2.png" alt="charity: water logo" class="logo" id="menuBtn" />
+      </div>
+      <!-- Dropdown menu covers the whole phone when open, with background image -->
+      <div class="dropdown-menu" id="dropdownMenu">
+        <div class="dropdown-overlay"></div>
+        <button class="close-menu" id="closeMenuBtn">&times;</button>
+        <div class="dropdown-links">
+          <!-- Links in the requested order -->
+          <a href="#give" class="dropdown-give">Give 💧</a>
+          <a href="#signin" class="dropdown-link">Sign In</a>
+          <a href="#about" class="dropdown-link">About Us</a>
+          <a href="#action" class="dropdown-link">Take Action</a>
+          <a href="#whywater" class="dropdown-link">Why Water?</a>
+        </div>
+      </div>
+      <!-- Hero section for phone -->
+      <section class="hero">
+        <h1 class="headline">One Drop<br>Can Start a<br>Waterfall</h1>
+        <p class="subheading">
+          Your support can spark a ripple effect –<br>
+          creating clean water, healthier communities,<br>
+          and a beautiful waterfall of opportunity<br>
+          for those who need it most.
+        </p>
+        <button class="cta-button">Start the Ripple Today!</button>
+      </section>
+    </div>
+  </div>
+  <!-- Simple beginner JavaScript for dropdown menu -->
+  <script>
+    // Get the menu button (logo), dropdown menu, and close button
+    var menuBtn = document.getElementById('menuBtn');
+    var dropdownMenu = document.getElementById('dropdownMenu');
+    var closeMenuBtn = document.getElementById('closeMenuBtn');
+
+    // When the logo is clicked, show the dropdown menu
+    menuBtn.onclick = function() {
+      dropdownMenu.classList.add('open');
+    };
+    // When the close button is clicked, hide the dropdown menu
+    closeMenuBtn.onclick = function() {
+      dropdownMenu.classList.remove('open');
+    };
+    // Optional: close menu if you click outside the menu
+    document.addEventListener('click', function(e) {
+      if (
+        dropdownMenu.classList.contains('open') &&
+        !dropdownMenu.contains(e.target) &&
+        e.target !== menuBtn
+      ) {
+        dropdownMenu.classList.remove('open');
+      }
+    });
+  </script>
+</body>
+
+</html>
